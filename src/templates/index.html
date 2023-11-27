@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neutral Nexus</title>
+    <style>
+        body {
+  font-family: Arial, sans-serif; font-size: 16px;
+}
+
+.chat-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.chat-header {
+  background-color: #f2f2f2;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+}
+
+.chat-box {
+  height: 480px;
+  overflow-y: scroll;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.message {
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+.message.received {
+  background-color: #f2f2f2;
+}
+
+.message.sent {
+  background-color: #e2f2ff;
+}
+
+.chat-input {
+  display: flex;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 5px;
+}
+
+button {
+  padding: 5px 10px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+    
+    </style>
+</head>
+<body>
+    
+    <div class="chat-container">
+        <div class="chat-header">
+          <h2>NeutralNexus</h2>
+        </div>
+        <div class="chat-box" id="chat-box">
+          <div class="message received">Hello! whats the news?</div>
+        </div>
+        <div class="chat-input">
+          <input type="text" id="user-input" placeholder="Type your message...">
+          <button id="send-btn">Send</button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        var sendBtn = document.getElementById("send-btn");
+        var userInput = document.getElementById("user-input");
+        var chatBox = document.getElementById("chat-box");
+        sendBtn.addEventListener("click", function() {
+            var message = userInput.value.trim();
+            if (message !== "") {
+            appendMessage(message, "sent");
+            userInput.value = "";
+            scrollToBottom();
+            $.ajax({
+                url: "http://127.0.0.1:8080/google_bard_response/?prompt=" + message,
+                type: 'GET',
+                dataType: 'json', // added data type
+                success: function(res) {
+                    console.log(res);
+                    // alert(res);
+                    appendMessage(res.message, "received");
+                }
+            });
+            }
+        });
+
+        function appendMessage(message, type) {
+            var messageElement = document.createElement("div");
+            messageElement.classList.add("message", type);
+            messageElement.innerText = message;
+            chatBox.appendChild(messageElement);
+        }
+
+        function scrollToBottom() {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+        });
+
+    </script>
+</body>
+</html>
