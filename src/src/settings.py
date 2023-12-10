@@ -16,13 +16,13 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = BASE_DIR / 'templates'
 
-PAML_APP_KEY = 'AIzaSyBTHKeu5L8JRAqNZ-WrUU3zQm2w9ZUxmmI'
+PAML_APP_KEY = 'Yours'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-dhfflsur%hlta#%9gd!g0c2pbg(2q46hgh9#zf2j#8qmc&x2z&'
+SECRET_KEY = 'Yours'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
